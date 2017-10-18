@@ -47,13 +47,16 @@
                             <field name="active" />
                         </group>
                     </group>
-
+                    <group string="Pasatiempos">
+                        <field name="pasatiempos_ids" widget="many2many_tags" nolabel="1"/>
+                    </group>
                     <notebook>
                         <page string="Asignaturas">
                             <field name="materias_ids" >
                                 <tree string="Materias" editable="bottom">
-                                    <field name="name" required="1"/>
+                                    <field name="name" required="1" domain="[('type','=','service'),('es_asignatura','=',True)]" context="{'default_es_asignatura':True,'default_type':'service'}"/>
                                     <field name="maestro_id" required="1"/>
+                                    <field name="precio" />
                                 </tree>
                             </field>
                         </page>

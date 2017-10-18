@@ -4,6 +4,14 @@ from odoo import api, fields, models
 from odoo.exceptions import UserError, \
                     RedirectWarning, ValidationError
 
+class PasatiempoOdoo(models.Model):
+    _name = 'pasatiempo.odoo'
+    _description = 'Pasatiempos del Estudiante'
+
+    name = fields.Char('Descripcion', size=128, 
+                                   required=True)
+
+    
 class EstudiantesOdoo(models.Model):
     _name = 'estudiantes.odoo'
 
@@ -52,6 +60,12 @@ class EstudiantesOdoo(models.Model):
     materias_ids = fields.One2many('materia.odoo',
                         'estudiante_id',
                         'Asignaturas/Materias')
+
+    pasatiempos_ids = fields.Many2many('pasatiempo.odoo',
+                        'estudiantes_pasatiempos_rel',
+                        'estudiante_id',
+                        'pasatiempo_id',
+                        'Pasatiempos')
 
     ## Metodos Basicos ORM
     # * Creacion
@@ -102,6 +116,7 @@ class EstudiantesOdoo(models.Model):
     # * indexado = index
     # * copiado = copy
 
+
 class MateriaOdoo(models.Model):
     _name = 'materia.odoo'
     _description = 'Asignaturas para Estudiantes'
@@ -111,6 +126,8 @@ class MateriaOdoo(models.Model):
                                 'Profesor')
     estudiante_id = fields.Many2one('estudiantes.odoo', 
                                     'ID Ref')
+    precio = fields.Float('Costo', digits=(14,2), 
+                related="name.list_price", readonly=True)
 
 class ProfesorOdoo(models.Model):
     _name = 'profesor.odoo'

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+    
+    <record model="ir.ui.view" id="product_template_herencia_academy">
+        <field name="name">product.template.materia</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <!-- 
+            position=
+                    * after
+                    * before
+                    * inside
+                    * replace 
+                    * attributes -->
+            <field name="type" position="after">
+                <field name="es_asignatura" attrs="{'invisible':[('type','!=','service')]}"/>
+                <!-- invisible, required, readonly -->
+            </field>
+
+        </field>
+    </record>
+
+
+    </data>
+</odoo>

@@ -17,6 +17,7 @@ las Bases de Desarrollo con  Odoo.
     'data': [
         'estudiantes_view.xml',
         'profesores_view.xml',
+        'product_view.xml',
         'data.xml',
     ],
     'installable': True,
