@@ -10,6 +10,18 @@
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
-
     </data>
+
+    <data>
+        <record id="pasatiempo_01" model="pasatiempo.odoo">
+            <field name="name">Futbol</field>
+        </record>
+        <record id="pasatiempo_02" model="pasatiempo.odoo">
+            <field name="name">Correr</field>
+        </record>
+        <record id="pasatiempo_03" model="pasatiempo.odoo">
+            <field name="name">Facebook</field>
+        </record>
+    </data>
+
 </odoo>
