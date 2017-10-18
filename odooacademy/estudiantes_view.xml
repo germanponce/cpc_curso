@@ -49,6 +49,14 @@
                     </group>
 
                     <notebook>
+                        <page string="Asignaturas">
+                            <field name="materias_ids" >
+                                <tree string="Materias" editable="bottom">
+                                    <field name="name" required="1"/>
+                                    <field name="maestro_id" required="1"/>
+                                </tree>
+                            </field>
+                        </page>
                         <page string="Notas">
                             <field name="notas" placeholder="Notas......"/>
                         </page>

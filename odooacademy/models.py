@@ -49,6 +49,10 @@ class EstudiantesOdoo(models.Model):
     usuario_id = fields.Many2one('res.users',
                                 'Usuario Odoo')
 
+    materias_ids = fields.One2many('materia.odoo',
+                        'estudiante_id',
+                        'Asignaturas/Materias')
+
     ## Metodos Basicos ORM
     # * Creacion
     # * Escritura
@@ -98,7 +102,15 @@ class EstudiantesOdoo(models.Model):
     # * indexado = index
     # * copiado = copy
 
-
+class MateriaOdoo(models.Model):
+    _name = 'materia.odoo'
+    _description = 'Asignaturas para Estudiantes'
+    
+    name = fields.Many2one('product.template','Materia')
+    maestro_id = fields.Many2one('profesor.odoo',
+                                'Profesor')
+    estudiante_id = fields.Many2one('estudiantes.odoo', 
+                                    'ID Ref')
 
 class ProfesorOdoo(models.Model):
     _name = 'profesor.odoo'
