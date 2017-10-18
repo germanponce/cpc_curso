@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+    <record id="estudiantes_odoo_tree" model="ir.ui.view">
+        <field name="name">estudiantes.odoo.tree</field>
+        <field name="model">estudiantes.odoo</field>
+        <field name="arch" type="xml">
+            <tree string="Listado de Estudiantes">
+                <field name="name" />
+                <field name="fecha_registro" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+<record id="estudiantes_odoo_form" model="ir.ui.view">
+        <field name="name">estudiantes.odoo.form</field>
+        <field name="model">estudiantes.odoo</field>
+        <field name="arch" type="xml">
+            <form string="Captura del Registro de Estudiante">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div align="right">
+                        <h1>
+                            <field name="matricula" />
+                        </h1>
+                    </div>
+                    <field name="foto" widget="image" class="oe_avatar" nolabel="1"/>
+                     <div class="oe_title">
+                        <h3>
+                            <field name="name" default_focus="1" placeholder="Nombre" />
+                        </h3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="fecha_nacimiento" required="1" />
+                            <field name="curp" />
+                            <field name="fecha_registro" />
+                            <field name="usuario_id" />
+                        </group>
+                        <group>
+                            <field name="edad" />
+                            <field name="genero" />
+                            <field name="active" />
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Notas">
+                            <field name="notas" placeholder="Notas......"/>
+                        </page>
+                    </notebook>
+
+                </sheet>
+                
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+
+    <record id="estudiantes_odoo_action" model="ir.actions.act_window">
+        <field name="name">Registro de Estudiantes</field>
+        <field name="res_model">estudiantes.odoo</field>
+        <field name="context">{}</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+<menuitem id="estudiantes_odoo_menu" name="Odoo Academy" />
+
+<menuitem id="estudiantes_odoo_record_menu" name="Registro" parent="estudiantes_odoo_menu" sequence="1" />
+
+<menuitem id="estudiantes_odoo_record_menu_action" name="Estudiantes" parent="estudiantes_odoo_record_menu" action="estudiantes_odoo_action" sequence="1"/>
+
+
+    </data>
+</odoo>

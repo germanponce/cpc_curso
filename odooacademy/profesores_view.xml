@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+    <record id="profesores_odoo_tree" model="ir.ui.view">
+        <field name="name">profesor.odoo.tree</field>
+        <field name="model">profesor.odoo</field>
+        <field name="arch" type="xml">
+            <tree string="Listado de Maestros">
+                <field name="name" />
+                <field name="cedula_profesional" />
+                <field name="carrera_profesional" />
+            </tree>
+        </field>
+    </record>
+
+<record id="profesores_odoo_form" model="ir.ui.view">
+        <field name="name">profesor.odoo.form</field>
+        <field name="model">profesor.odoo</field>
+        <field name="arch" type="xml">
+            <form string="Captura del Registro de un Maestro">
+                <header>
+                </header>
+                <sheet>
+                    <div align="right">
+                        <label class="oe_edit_only" for="cedula_profesional" string="Cedula Profesional"/>
+                        <h1>
+                            <field name="cedula_profesional" />
+                        </h1>
+                    </div>
+                    <field name="foto" widget="image" class="oe_avatar" nolabel="1"/>
+                     <div class="oe_title">
+                        <h3>
+                            <field name="name" default_focus="1" placeholder="Nombre Completo ..." />
+                        </h3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="carrera_profesional" />
+                            <field name="fecha_registro" />
+                            <field name="usuario_id" />
+                        </group>
+                        <group>
+                            <field name="edad" />
+                            <field name="genero" />
+                            <field name="active" />
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Notas">
+                            <field name="notas" placeholder="Notas......"/>
+                        </page>
+                    </notebook>
+
+                </sheet>
+                
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+
+    <record id="profesores_odoo_action" model="ir.actions.act_window">
+        <field name="name">Registro de Maestros</field>
+        <field name="res_model">profesor.odoo</field>
+        <field name="context">{}</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+<menuitem id="profesores_odoo_record_menu_action" name="Maestros" parent="estudiantes_odoo_record_menu" action="profesores_odoo_action" sequence="2"/>
+
+
+
+    </data>
+</odoo>
