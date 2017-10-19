@@ -6,6 +6,9 @@ from odoo.exceptions import UserError, \
 
 from odoo.addons import decimal_precision as dp
 
+from datetime import datetime, timedelta
+from odoo.tools import misc, \
+DEFAULT_SERVER_DATETIME_FORMAT
 
 class PasatiempoOdoo(models.Model):
     _name = 'pasatiempo.odoo'
@@ -70,6 +73,22 @@ class EstudiantesOdoo(models.Model):
                         'pasatiempo_id',
                         'Pasatiempos')
 
+    @api.onchange('fecha_nacimiento')
+    def onchange_calculo_edad(self):
+        print "#### CALCULO AUTOMATICO DE EDAD >>> "
+        fecha_actual = fields.Datetime.now()
+        fecha_nacimiento = self.fecha_nacimiento+" 00:00:00"
+        print "##### fecha_actual >>>> ",fecha_actual
+        print "#### fecha_nacimiento >>>> ",fecha_nacimiento
+        server_dt = DEFAULT_SERVER_DATETIME_FORMAT
+        fecha_actual_strp = datetime.strptime(fecha_actual,server_dt)
+        fecha_nacimiento_strp = datetime.strptime(fecha_nacimiento,server_dt)
+        print "### fecha_actual_strp ",fecha_actual_strp
+        print "### fecha_nacimiento_strp ",fecha_nacimiento_strp
+        print "##### fecha_actual año >> ",fecha_actual_strp.year
+        print "##### fecha_actual mes >> ",fecha_actual_strp.month
+        print "##### fecha_actual dia >> ",fecha_actual_strp.day
+        
     ## Metodos Basicos ORM
     # * Creacion
     # * Escritura
