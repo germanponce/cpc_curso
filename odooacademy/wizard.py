@@ -7,7 +7,20 @@ class EstudianteFacturacionWizard(models.TransientModel):
     _name = 'estudiante.facturacion.wizard'
     _description = 'Generacion de Facturas'
 
-    cliente_id = fields.Many2one('res.partner','Cliente')
+    @api.model
+    def _get_partner(self):
+        print "### _get_partner"
+        context = self._context
+        estudiantes_obj = self.env['estudiantes.odoo']
+        active_ids = context['active_ids']
+        print "#### active_ids >>> ",active_ids
+        for estudiante in estudiantes_obj.browse(active_ids):
+            return estudiante.usuario_id.partner_id.id
+                
+
+    cliente_id = fields.Many2one('res.partner','Cliente', 
+        default=_get_partner)
+
 
     @api.multi
     def crea_factura(self):
@@ -37,6 +50,12 @@ class EstudianteFacturacionWizard(models.TransientModel):
                 }
                 factura_id = factura_obj.create(factura_vals)
                 factura_ids.append(factura_id.id)
+
+                estudiante.write({
+                    'facturado': True,
+                    'factura_id': factura_id.id,
+                    })
+
             print "### CONTEXT >>>> ",context
             print "### CREACION DE FACTURAS >>>> "
         return {

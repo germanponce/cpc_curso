@@ -28,6 +28,7 @@
 
                     <button name="accion_cerrar" states="conf" string="Terminar Registro" type="object" icon="fa-hand-peace-o" class="oe_edit_only btn-success"/>
 
+                    <button name="%(asistente_facturacion_act)d" type="action" string="Crear Factura" states="conf" icon="fa-money" />
 
                     <field name="state" widget="statusbar"/>
                 </header>

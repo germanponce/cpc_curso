@@ -15,10 +15,10 @@ las Bases de Desarrollo con  Odoo.
     'website': 'https://argil.mx',
     'depends': ['mail','product','decimal_precision','account'],
     'data': [
+        'wizard.xml',
         'estudiantes_view.xml',
         'profesores_view.xml',
         'product_view.xml',
-        'wizard.xml',
         'data.xml',
     ],
     'installable': True,
