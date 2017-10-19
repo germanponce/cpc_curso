@@ -50,18 +50,19 @@ class EstudiantesOdoo(models.Model):
     genero = fields.Selection([('m','Masculino'),
                                 ('f','Femenino')], 
                                 'Genero', required=True)
-    curp = fields.Char('CURP',size=18)
+    curp = fields.Char('CURP',size=18, track_visibility="onchange")
     matricula = fields.Char('Matricula', size=64, readonly=True)
 
     fecha_nacimiento = fields.Date('Fecha de Nacimiento', 
-                                    equired=True)
+                                    equired=True,
+                                    track_visibility="onchange")
 
     notas  = fields.Text('Notas')
 
     ### Campos Relacionales ###
 
     usuario_id = fields.Many2one('res.users',
-                                'Usuario Odoo')
+                                'Usuario Odoo', track_visibility="onchange")
 
     materias_ids = fields.One2many('materia.odoo',
                         'estudiante_id',
@@ -82,24 +83,32 @@ class EstudiantesOdoo(models.Model):
                 raise UserError("Error!\nNo puedes confirmar \
                     sin tener un valor en el campo CURP...")
             self.state = 'conf'
+            rec.message_post(body='El usuario %s \
+                confirmo el Registro' % self.env.user.name)
             #self.write({'state':'conf'})
 
     @api.multi
     def accion_cancelar(self):
         for rec in self:
             self.state = 'cancel'
+            rec.message_post(body='El usuario %s \
+                cancelo el Registro' % self.env.user.name)
             #self.write({'state':'conf'})
 
     @api.multi
     def accion_a_nuevo(self):
         for rec in self:
             self.state = 'nvo'
+            rec.message_post(body='El usuario %s \
+                reedito el Registro' % self.env.user.name)
             #self.write({'state':'conf'})
 
     @api.multi
     def accion_cerrar(self):
         for rec in self:
             self.state = 'fin'
+            rec.message_post(body='El usuario %s \
+                finalizo el Registro' % self.env.user.name)
             #self.write({'state':'conf'})
 
     @api.onchange('fecha_nacimiento')

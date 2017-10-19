@@ -40,20 +40,20 @@
                     <field name="foto" widget="image" class="oe_avatar" nolabel="1"/>
                      <div class="oe_title">
                         <h3>
-                            <field name="name" default_focus="1" placeholder="Nombre" />
+                            <field name="name" default_focus="1" placeholder="Nombre" attrs="{'readonly':[('state','!=','nvo')]}"/>
                         </h3>
                     </div>
                     <group>
                         <group>
-                            <field name="fecha_nacimiento" required="1" />
-                            <field name="curp" />
-                            <field name="fecha_registro" />
-                            <field name="usuario_id" />
+                            <field name="fecha_nacimiento" required="1"  attrs="{'readonly':[('state','!=','nvo')]}"/>
+                            <field name="curp" attrs="{'readonly':[('state','!=','nvo')]}"/>
+                            <field name="fecha_registro" attrs="{'readonly':[('state','!=','nvo')]}"/>
+                            <field name="usuario_id" attrs="{'readonly':[('state','!=','nvo')]}"/>
                         </group>
                         <group>
-                            <field name="edad" />
-                            <field name="genero" />
-                            <field name="active" />
+                            <field name="edad" attrs="{'readonly':[('state','!=','nvo')]}"/>
+                            <field name="genero" attrs="{'readonly':[('state','!=','nvo')]}"/>
+                            <field name="active"/>
                         </group>
                     </group>
                     <group string="Pasatiempos">
@@ -61,7 +61,7 @@
                     </group>
                     <notebook>
                         <page string="Asignaturas">
-                            <field name="materias_ids" >
+                            <field name="materias_ids" attrs="{'readonly':[('state','!=','nvo')]}">
                                 <tree string="Materias" editable="bottom">
                                     <field name="name" required="1" domain="[('type','=','service'),('es_asignatura','=',True)]" context="{'default_es_asignatura':True,'default_type':'service'}"/>
                                     <field name="maestro_id" required="1"/>
