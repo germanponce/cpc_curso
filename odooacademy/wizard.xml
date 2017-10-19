@@ -8,6 +8,9 @@
 		<field name="arch" type="xml">
 			<form string="Asistente de facturacion">
 				<sheet>
+					<group string="Detalles para la Facturacion">
+						<field name="cliente_id" required="1"/>
+					</group>
 				</sheet>
 				<footer>
 					<button name="crea_factura" string="Facturar" type="object" icon="fa-cogs" />
