@@ -75,6 +75,8 @@ class EstudiantesOdoo(models.Model):
 
     @api.onchange('fecha_nacimiento')
     def onchange_calculo_edad(self):
+        if not self.fecha_nacimiento:
+            return {}
         print "#### CALCULO AUTOMATICO DE EDAD >>> "
         fecha_actual = fields.Datetime.now()
         fecha_nacimiento = self.fecha_nacimiento+" 00:00:00"
@@ -88,7 +90,13 @@ class EstudiantesOdoo(models.Model):
         print "##### fecha_actual año >> ",fecha_actual_strp.year
         print "##### fecha_actual mes >> ",fecha_actual_strp.month
         print "##### fecha_actual dia >> ",fecha_actual_strp.day
-        
+        diff_fechas = fecha_actual_strp - fecha_nacimiento_strp
+        diff_dias = diff_fechas.days
+        print "### DIFERENCIA EN DIAS >> ",diff_dias
+
+        calculo_anios = diff_dias/365
+        self.edad = calculo_anios
+
     ## Metodos Basicos ORM
     # * Creacion
     # * Escritura
