@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+	
+	<record id="asistente_facturacion_form" model="ir.ui.view">
+		<record name="name">estudiante.facturacion.wizard.form</record>
+		<field name="model">estudiante.facturacion.wizard</field>
+		<field name="arch" type="xml">
+			<form string="Asistente de facturacion">
+				<sheet>
+				</sheet>
+				<footer>
+					<button name="crea_factura" string="Facturar" type="object" icon="fa-cogs" />
+					<button string="Cerrar" special="cancel" icon="fa-close" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+
+<act_window
+            name="Facturacion de Materias"
+            res_model="estudiante.facturacion.wizard"
+            src_model="estudiantes.odoo"
+            view_mode="form" target="new"
+            key2="client_action_multi"
+            id="asistente_facturacion_act"/>
+
+
+    </data>
+</odoo>

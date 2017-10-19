@@ -13,11 +13,12 @@ las Bases de Desarrollo con  Odoo.
     """,
     'author': 'German Ponce D.',
     'website': 'https://argil.mx',
-    'depends': ['mail','product','decimal_precision'],
+    'depends': ['mail','product','decimal_precision','account'],
     'data': [
         'estudiantes_view.xml',
         'profesores_view.xml',
         'product_view.xml',
+        'wizard.xml',
         'data.xml',
     ],
     'installable': True,

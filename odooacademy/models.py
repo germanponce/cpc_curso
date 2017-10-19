@@ -27,6 +27,14 @@ class EstudiantesOdoo(models.Model):
     _order = 'id'
     #_rec_name = 'nombre' 
 
+    @api.multi
+    def _get_costo_total(self):
+        for rec in self:
+            costo_total = 0.0
+            for materia in rec.materias_ids:
+                costo_total+=materia.precio
+            rec.costo_total = costo_total
+
     name = fields.Char('Nombre', 
                         size=128, 
                         required=True)
@@ -76,6 +84,10 @@ class EstudiantesOdoo(models.Model):
                         'pasatiempo_id',
                         'Pasatiempos')
 
+    costo_total = fields.Float('Total a Facturar',
+                            dp.get_precision('Costo Materia'),
+                            compute="_get_costo_total")
+
     #### Validaciones / Restricciones ###
 
     # Base de Datos #
@@ -99,30 +111,31 @@ class EstudiantesOdoo(models.Model):
     @api.constrains('usuario_id')
     @api.one
     def _revision_asignacion_usuario(self):
-        usuarios_obj = self.env['res.users']
-        estudiantes_ids = self.search([('usuario_id','=',\
-                                        self.usuario_id.id),
-                                     ('id','!=',self.id)])
-        cr = self._cr
-        cr.execute("""
-            select id, name, fecha_registro from estudiantes_odoo
-                where usuario_id = %s
-                    and id != %s
-            """,(self.usuario_id.id, self.id))
-        cr_res = cr.fetchall()
-        print "#### CR_RES >>>> ",cr_res
-        print "### RESULTADO RECORDSETS  >>  ",estudiantes_ids
+        if self.usuario_id:
+            usuarios_obj = self.env['res.users']
+            estudiantes_ids = self.search([('usuario_id','=',\
+                                            self.usuario_id.id),
+                                         ('id','!=',self.id)])
+            cr = self._cr
+            cr.execute("""
+                select id, name, fecha_registro from estudiantes_odoo
+                    where usuario_id = %s
+                        and id != %s
+                """,(self.usuario_id.id, self.id))
+            cr_res = cr.fetchall()
+            print "#### CR_RES >>>> ",cr_res
+            print "### RESULTADO RECORDSETS  >>  ",estudiantes_ids
 
-        est_list_cr = [x[0] for x in cr_res]
-        # if est_list_cr:
-        #     raise ValidationError("El Usuario ya fue asignado \
-        #         a otro estudiante.")
+            est_list_cr = [x[0] for x in cr_res]
+            # if est_list_cr:
+            #     raise ValidationError("El Usuario ya fue asignado \
+            #         a otro estudiante.")
 
-        if estudiantes_ids:
-            for estudiante_rp in estudiantes_ids:
-                raise ValidationError("Error\n \
-                Existe un Estudiante con el mismo Usuario Odoo.\
-                 %s " % estudiante_rp.name)
+            if estudiantes_ids:
+                for estudiante_rp in estudiantes_ids:
+                    raise ValidationError("Error\n \
+                    Existe un Estudiante con el mismo Usuario Odoo.\
+                     %s " % estudiante_rp.name)
 
     @api.multi
     def unlink(self):
@@ -251,6 +264,29 @@ class EstudiantesOdoo(models.Model):
         res = super(EstudiantesOdoo, self).create(vals)
         print "### RECORDSET >>> ",res
         return res
+
+    @api.multi
+    def retornar_plantillas(self):
+        cr = self._cr
+        for rec in self:
+            cr.execute("""
+                select name from materia_odoo
+                    where estudiante_id = %s;
+                """,(rec.id,))
+            cr_res = cr.fetchall()
+            materias_ids = [x[0] for x in cr_res if x]
+            if materias_ids:
+                return {
+                    'domain': [('id','in',materias_ids)],
+                    'name': 'Busqueda de Productos para el Estudiante %s \
+                    ' % rec.name,
+                    'view_mode': 'tree,form',
+                    'view_type': 'form',
+                    'res_model': 'product.template',
+                    'type': 'ir.actions.act_window',
+                }
+
+        return {}
 
     # * requerido = required
     # * solo lectura = readonly

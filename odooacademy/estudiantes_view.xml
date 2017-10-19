@@ -65,9 +65,18 @@
                                 <tree string="Materias" editable="bottom">
                                     <field name="name" required="1" domain="[('type','=','service'),('es_asignatura','=',True)]" context="{'default_es_asignatura':True,'default_type':'service'}"/>
                                     <field name="maestro_id" required="1"/>
-                                    <field name="precio" />
+                                    <field name="precio" sum="Costo Total"/>
                                 </tree>
                             </field>
+                            <group>
+                                 <group class="oe_subtotal_footer oe_right" colspan="2" name="costo_total_group">
+
+                                        <field name="costo_total" />
+                            </group>
+
+                            <button name="retornar_plantillas" string="Ver Productos" type="object" icon="fa-cogs" class="oe_link"/>
+                            
+                            </group>
                         </page>
                         <page string="Notas">
                             <field name="notas" placeholder="Notas......"/>
