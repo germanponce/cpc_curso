@@ -3,7 +3,7 @@
     <data>
 	
 	<record id="asistente_facturacion_form" model="ir.ui.view">
-		<record name="name">estudiante.facturacion.wizard.form</record>
+		<field name="name">estudiante.facturacion.wizard.form</field>
 		<field name="model">estudiante.facturacion.wizard</field>
 		<field name="arch" type="xml">
 			<form string="Asistente de facturacion">
