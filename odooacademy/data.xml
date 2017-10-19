@@ -10,6 +10,12 @@
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
+
+        <record id="materia_precision_decimal_id" model="decimal.precision">
+            <field name="name">Costo Materia</field>
+            <field name="digits">4</field>
+        </record>
+
     </data>
 
     <data>
@@ -22,6 +28,7 @@
         <record id="pasatiempo_03" model="pasatiempo.odoo">
             <field name="name">Facebook</field>
         </record>
+
     </data>
 
 </odoo>

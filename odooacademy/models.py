@@ -4,6 +4,9 @@ from odoo import api, fields, models
 from odoo.exceptions import UserError, \
                     RedirectWarning, ValidationError
 
+from odoo.addons import decimal_precision as dp
+
+
 class PasatiempoOdoo(models.Model):
     _name = 'pasatiempo.odoo'
     _description = 'Pasatiempos del Estudiante'
@@ -126,8 +129,20 @@ class MateriaOdoo(models.Model):
                                 'Profesor')
     estudiante_id = fields.Many2one('estudiantes.odoo', 
                                     'ID Ref')
-    precio = fields.Float('Costo', digits=(14,2), 
-                related="name.list_price", readonly=True)
+    #     precio = fields.Float('Costo', digits=(14,2), )
+    precio = fields.Float('Costo', 
+                    dp.get_precision('Costo Materia'))
+
+
+    @api.onchange('name')
+    def actualizar_costo_materia(self):
+        context = self._context
+        print "###### actualizar_costo_materia >>"
+        print "###### CONTEXT >>>> ",context
+        list_price = self.name.list_price
+        print "##### PRECIO DE LA MATERIA >>> ",list_price
+        self.precio = list_price
+        #self.write({'precio':list_price})
 
 class ProfesorOdoo(models.Model):
     _name = 'profesor.odoo'
