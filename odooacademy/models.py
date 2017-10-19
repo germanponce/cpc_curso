@@ -50,7 +50,9 @@ class EstudiantesOdoo(models.Model):
     genero = fields.Selection([('m','Masculino'),
                                 ('f','Femenino')], 
                                 'Genero', required=True)
-    curp = fields.Char('CURP',size=18, track_visibility="onchange")
+    curp = fields.Char('CURP',size=18, track_visibility="onchange",
+                                                    copy=False)
+
     matricula = fields.Char('Matricula', size=64, readonly=True)
 
     fecha_nacimiento = fields.Date('Fecha de Nacimiento', 
@@ -73,6 +75,60 @@ class EstudiantesOdoo(models.Model):
                         'estudiante_id',
                         'pasatiempo_id',
                         'Pasatiempos')
+
+    #### Validaciones / Restricciones ###
+
+    # Base de Datos #
+    _sql_constraints = [
+        ('unique_curp', 'unique(curp)', 'El Campo CURP Debe ser Unico'),
+    ]
+
+
+    # Validaciones por Codigo Python #
+
+    @api.constrains('edad')
+    @api.one
+    def _revision_edad(self):
+        if self.edad <= 0:
+            raise ValidationError("Error!\n \
+                La edad no puede ser Nula o Negativa.")
+        if self.edad < 15:
+            raise ValidationError("Error!\n \
+                La edad minina de registro es 15")
+
+    @api.constrains('usuario_id')
+    @api.one
+    def _revision_asignacion_usuario(self):
+        usuarios_obj = self.env['res.users']
+        estudiantes_ids = self.search([('usuario_id','=',\
+                                        self.usuario_id.id),
+                                     ('id','!=',self.id)])
+        if estudiantes_ids:
+            raise ValidationError("Error\n \
+                Existe un Estudiante con el mismo Usuario Odoo.")
+
+    @api.multi
+    def unlink(self):
+        for rec in self:
+            if rec.state != 'nvo':
+                raise UserError("Error!\nNo puedes Eliminar un \
+                    registro en un estado diferente de nuevo.")
+            rec.usuario_id.unlink()
+        res = super(EstudiantesOdoo, self).unlink()
+        return res
+
+    @api.one
+    @api.returns('self', lambda value: value.id)
+    def copy(self, default=None):
+        print "##### SELF >>> ",self
+        print "##### metodo copy >>> "
+        nuevo_nombre = self.name+" (Copia)"
+        default.update({
+            'name': nuevo_nombre,
+            'fecha_registro': fields.Datetime.now(),
+            })
+        res = super(EstudiantesOdoo, self).copy(default)
+        return res
 
     @api.multi
     def accion_confirmar(self):
@@ -155,7 +211,7 @@ class EstudiantesOdoo(models.Model):
         next_by_code('estudiantes.odoo') or 'SIN-MT'
         vals['matricula'] = matricula_secuencia
 
-        curp_mayusculas = vals['curp']
+        curp_mayusculas = vals['curp'] if 'curp' in vals else ''
         if curp_mayusculas:
             curp_mayusculas = curp_mayusculas.upper()
             vals['curp'] = curp_mayusculas
