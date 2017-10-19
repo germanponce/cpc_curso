@@ -20,6 +20,15 @@
         <field name="arch" type="xml">
             <form string="Captura del Registro de Estudiante">
                 <header>
+                    <button name="accion_confirmar" states="nvo" string="Confirmar Registro" type="object" icon="fa-check" class="oe_edit_only btn-primary"/>
+
+                    <button name="accion_cancelar" states="nvo,conf" string="Cancelar" type="object" icon="fa-window-close" class="oe_edit_only btn-danger"/>
+
+                    <button name="accion_a_nuevo" states="cancel" string="Re edicion" type="object" icon="fa-cogs" class="oe_edit_only btn-info"/>
+
+                    <button name="accion_cerrar" states="conf" string="Terminar Registro" type="object" icon="fa-hand-peace-o" class="oe_edit_only btn-success"/>
+
+
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>

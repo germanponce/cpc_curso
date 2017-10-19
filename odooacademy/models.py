@@ -73,6 +73,35 @@ class EstudiantesOdoo(models.Model):
                         'pasatiempo_id',
                         'Pasatiempos')
 
+    @api.multi
+    def accion_confirmar(self):
+        print "### SELF >>> ",self
+        for rec in self:
+            print "### rec name >>> ",rec.name
+            if not rec.curp:
+                raise UserError("Error!\nNo puedes confirmar \
+                    sin tener un valor en el campo CURP...")
+            self.state = 'conf'
+            #self.write({'state':'conf'})
+
+    @api.multi
+    def accion_cancelar(self):
+        for rec in self:
+            self.state = 'cancel'
+            #self.write({'state':'conf'})
+
+    @api.multi
+    def accion_a_nuevo(self):
+        for rec in self:
+            self.state = 'nvo'
+            #self.write({'state':'conf'})
+
+    @api.multi
+    def accion_cerrar(self):
+        for rec in self:
+            self.state = 'fin'
+            #self.write({'state':'conf'})
+
     @api.onchange('fecha_nacimiento')
     def onchange_calculo_edad(self):
         if not self.fecha_nacimiento:
