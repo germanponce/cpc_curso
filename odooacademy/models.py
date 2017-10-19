@@ -103,9 +103,26 @@ class EstudiantesOdoo(models.Model):
         estudiantes_ids = self.search([('usuario_id','=',\
                                         self.usuario_id.id),
                                      ('id','!=',self.id)])
+        cr = self._cr
+        cr.execute("""
+            select id, name, fecha_registro from estudiantes_odoo
+                where usuario_id = %s
+                    and id != %s
+            """,(self.usuario_id.id, self.id))
+        cr_res = cr.fetchall()
+        print "#### CR_RES >>>> ",cr_res
+        print "### RESULTADO RECORDSETS  >>  ",estudiantes_ids
+
+        est_list_cr = [x[0] for x in cr_res]
+        # if est_list_cr:
+        #     raise ValidationError("El Usuario ya fue asignado \
+        #         a otro estudiante.")
+
         if estudiantes_ids:
-            raise ValidationError("Error\n \
-                Existe un Estudiante con el mismo Usuario Odoo.")
+            for estudiante_rp in estudiantes_ids:
+                raise ValidationError("Error\n \
+                Existe un Estudiante con el mismo Usuario Odoo.\
+                 %s " % estudiante_rp.name)
 
     @api.multi
     def unlink(self):
