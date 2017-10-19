@@ -75,7 +75,13 @@
                             </group>
 
                             <button name="retornar_plantillas" string="Ver Productos" type="object" icon="fa-cogs" class="oe_link"/>
-                            
+
+                            </group>
+                        </page>
+                        <page string="Facturacion" attrs="{'invisible':[('facturado','=',False)]}">
+                            <group>
+                                <field name="facturado" />
+                                <field name="factura_id" />
                             </group>
                         </page>
                         <page string="Notas">

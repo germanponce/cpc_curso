@@ -88,6 +88,10 @@ class EstudiantesOdoo(models.Model):
                             dp.get_precision('Costo Materia'),
                             compute="_get_costo_total")
 
+    facturado = fields.Boolean('Facturado')
+
+    factura_id = fields.Many2one('account.invoice', 'Factura')
+    
     #### Validaciones / Restricciones ###
 
     # Base de Datos #
