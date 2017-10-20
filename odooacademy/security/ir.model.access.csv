@@ -1,2 +1,11 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 pasatiempo_odoo_usuario,pasatiempo.odoo.usuario,model_pasatiempo_odoo,odooacademy.odoo_academy_reader,1,1,1,0
+estudiantes_odoo_usuario,estudiantes.odoo.usuario,model_estudiantes_odoo,odooacademy.odoo_academy_reader,1,1,1,0
+materia_odoo_usuario,materia.odoo.usuario,model_materia_odoo,odooacademy.odoo_academy_reader,1,1,1,0
+profesor_odoo_usuario,profesor.odoo.usuario,model_profesor_odoo,odooacademy.odoo_academy_reader,1,1,1,0
+estudiante_facturacion_wizard,estudiante.facturacion.wizard.usuario,model_estudiante_facturacion_wizard,odooacademy.odoo_academy_reader,1,1,1,0
+pasatiempo_odoo_manager,pasatiempo.odoo.manager,model_pasatiempo_odoo,odooacademy.odoo_academy_manager,1,1,1,1
+estudiantes_odoo_manager,estudiantes.odoo.manager,model_estudiantes_odoo,odooacademy.odoo_academy_manager,1,1,1,1
+materia_odoo_manager,materia.odoo.manager,model_materia_odoo,odooacademy.odoo_academy_manager,1,1,1,1
+profesor_odoo_manager,profesor.odoo.manager,model_profesor_odoo,odooacademy.odoo_academy_manager,1,1,1,1
+estudiante_facturacion_wizard_manager,estudiante.facturacion.wizard.manager,model_estudiante_facturacion_wizard,odooacademy.odoo_academy_manager,1,1,1,1
