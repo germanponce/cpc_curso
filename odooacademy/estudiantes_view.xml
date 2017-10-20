@@ -62,8 +62,8 @@
                         <field name="pasatiempos_ids" widget="many2many_tags" nolabel="1"/>
                     </group>
                     <notebook>
-                        <page string="Asignaturas">
-                            <field name="materias_ids" attrs="{'readonly':[('state','!=','nvo')]}">
+                        <page string="Asignaturas" groups="odooacademy.odoo_academy_manager">
+                            <field name="materias_ids" attrs="{'readonly':[('state','!=','nvo')]}" groups="odooacademy.odoo_academy_manager">
                                 <tree string="Materias" editable="bottom">
                                     <field name="name" required="1" domain="[('type','=','service'),('es_asignatura','=',True)]" context="{'default_es_asignatura':True,'default_type':'service'}"/>
                                     <field name="maestro_id" required="1"/>
@@ -143,6 +143,6 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-<menuitem id="materia_menu" name="Materias" parent="estudiantes_odoo_conf_menu" action="materias_odoo_action" sequence="2"/>
+<menuitem id="materia_menu" name="Materias" parent="estudiantes_odoo_conf_menu" action="materias_odoo_action" sequence="2" groups="odooacademy.odoo_academy_manager"/>
     </data>
 </odoo>
