@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<odoo>
+    <data >
+
+    <template id="template_estudiantes_odoo_report">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.external_layout">
+                    <div class="page">
+                        <h1>
+                            Mi primer reporte ....
+                        </h1>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <report
+        id="reporte_estudiantes_odoo"
+        string="Ficha Estudiante"
+        model="estudiantes.odoo"
+        report_type="qweb-pdf"
+        file="odooacademy.template_estudiantes_odoo_report"
+        name="odooacademy.template_estudiantes_odoo_report"
+        />
+
+    <record id="reporte_estudiantes_odoo" model="ir.actions.report.xml">
+        <field name="print_report_name">'Ficha_para-'+object.matricula+'.pdf'</field>
+    </record>
+
+    </data>
+</odoo>
