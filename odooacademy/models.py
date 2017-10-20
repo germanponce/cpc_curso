@@ -92,6 +92,9 @@ class EstudiantesOdoo(models.Model):
 
     factura_id = fields.Many2one('account.invoice', 'Factura', readonly=True)
 
+    creado_por = fields.Many2one('res.users', 'Creado por', 
+        default=lambda self: self.env.user)
+
     #### Validaciones / Restricciones ###
 
     # Base de Datos #

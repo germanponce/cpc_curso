@@ -9,6 +9,7 @@
             <tree string="Listado de Estudiantes">
                 <field name="name" />
                 <field name="fecha_registro" />
+                <field name="creado_por"/>
                 <field name="state" />
             </tree>
         </field>
@@ -86,6 +87,9 @@
                             </group>
                         </page>
                         <page string="Notas">
+                            <group>
+                                <field name="creado_por"/>
+                            </group>
                             <field name="notas" placeholder="Notas......"/>
                         </page>
                     </notebook>
