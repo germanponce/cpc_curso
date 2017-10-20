@@ -20,6 +20,8 @@ las Bases de Desarrollo con  Odoo.
         'profesores_view.xml',
         'product_view.xml',
         'data.xml',
+        'security/groups.xml',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
     'auto_install': False,

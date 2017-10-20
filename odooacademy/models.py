@@ -254,7 +254,7 @@ class EstudiantesOdoo(models.Model):
                 raise UserError("Error el CURP debe ser a 18 Dig.")
         
         if 'usuario_id' not in vals or not vals['usuario_id']:
-            usuarios_obj = self.env['res.users']
+            usuarios_obj = self.env['res.users'].sudo()
             usuario_vals = {
                     'name': vals['name'],
                     'login': matricula_secuencia,#vals['name'].split(' ')[0].lower(),
@@ -265,7 +265,7 @@ class EstudiantesOdoo(models.Model):
 
             vals['usuario_id'] = usuario_nuevo_id
 
-        res = super(EstudiantesOdoo, self).create(vals)
+        res = super(EstudiantesOdoo, self.sudo()).create(vals)
         print "### RECORDSET >>> ",res
         return res
 

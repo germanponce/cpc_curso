@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+
+    <record id="odoo_academy_reader" model="res.groups">
+        <field name="name">Usuarios Estandar OdooAcademy</field>
+    </record>
+
+    <record id="odoo_academy_manager" model="res.groups">
+        <field name="name">Super Usuarios OdooAcademy</field>
+    </record>
+
+    </data>
+</odoo>
