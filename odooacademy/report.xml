@@ -7,9 +7,77 @@
             <t t-foreach="docs" t-as="o">
                 <t t-call="report.external_layout">
                     <div class="page">
+                        <h3>
+                            Nombre del Alumno:
+                        </h3>
                         <h1>
-                            Mi primer reporte ....
+                            <span t-field="o.name" />
                         </h1>
+                        <img t-if="o.foto" t-att-src="'data:image/png;base64,%s' % o.foto" style="max-height: 90px;height: auto;"/>
+
+                           <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Fecha Nacimiento</th>
+                                    <th>Edad</th>
+                                    <th>CURP</th>
+                                    <th>Matricula</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        <tr >
+                            <td>
+                               <p></p>
+                               <span t-field="o.fecha_nacimiento"/>
+                               <p></p>
+                            </td>
+                            <td>
+                               <p></p>
+                               <span t-field="o.edad"/>
+                               <p></p>
+                            </td>
+                            <td>
+                               <p></p>
+                               <span t-field="o.curp"/>
+                               <p></p>
+                            </td>
+                            <td>
+                               <p></p>
+                               <span t-field="o.matricula"/>
+                               <p></p>
+                            </td>
+
+                        </tr>
+                            </tbody>
+                        </table>
+
+<div class="container">
+  <h2>Materias</h2>
+  <p>Las Materias y los Costos estan descritos a continuación:</p>            
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Materia</th>
+        <th>Maestro</th>
+        <th>Costo</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr t-foreach="o.materias_ids" t-as="mt">
+      <td>
+        <span t-field='mt.name.name' />
+      </td>
+      <td>
+        <span t-field='mt.maestro_id.name' />
+      </td>
+      <td>
+        <span t-field='mt.precio' />
+      </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
                     </div>
                 </t>
             </t>
